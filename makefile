@@ -63,6 +63,7 @@ docx:
 
 pdf: docx
 	python tools/doc2pdf.py $(DOCX_FILE) $(PDF_FILE)
+	cmd /c start "./build/$(NAME).pdf"
 
 web:
 	$(MKBUILD)

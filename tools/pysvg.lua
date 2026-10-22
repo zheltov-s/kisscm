@@ -15,11 +15,29 @@ local function diagram_options(cb)
     }
 end
 
+local RSVG = "tools\\rsvg-convert.exe"
+local TMP  = "temp"
+local function svg_to_png(svg)
+    local base = TMP .. "\\pandoc_" .. pandoc.sha1(svg)
+    local svg_path, png_path = base .. ".svg", base .. ".png"
+
+    local f = io.open(svg_path, "wb"); f:write(svg); f:close()
+    os.execute(string.format('%s "%s" -o "%s"', RSVG, svg_path, png_path))
+    os.remove(svg_path)
+
+    local pf = io.open(png_path, "rb")
+    if not pf then error("[pysvg] rsvg-convert failed: " .. png_path) end
+    local png = pf:read("*a"); pf:close()
+    os.remove(png_path)
+    return png
+end
+
 function CodeBlock(el)
     if el.attr.classes[1] == "pysvg" then
         local svg = pandoc.pipe("python", {"-"}, "from tools.pysvg import *\n" .. el.text)
-        local fname = pandoc.sha1(svg) .. ".svg"
-        pandoc.mediabag.insert(fname, "image/svg+xml", svg)
+        local png = svg_to_png(svg)
+        local fname = pandoc.sha1(png) .. ".png"
+        pandoc.mediabag.insert(fname, "image/png", png)
         local options = diagram_options(el)
         local image = pandoc.Image(options.alt, fname, "", options.image_attrs)
         local plain = pandoc.Plain {image}
