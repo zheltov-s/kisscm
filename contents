@@ -54,12 +54,12 @@ EXAM = md/exam.md \
 BIB = md/bibliography.md
 
 MD = $(INTRO) \
-    $(CLI) \
-    $(MAN) \
-    $(VCS) \
-    $(LANGS) \
-    $(BUILD) \
-    $(VM) \
-    $(DOCS) \
-    $(EXAM) \
-    $(BIB)
+    $(CLI) 
+    #$(MAN) \
+    #$(VCS) \
+    #$(LANGS) \
+    #$(BUILD) \
+    #$(VM) \
+    #$(DOCS) \
+    #$(EXAM) \
+    #$(BIB)

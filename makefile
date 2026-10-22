@@ -51,7 +51,7 @@ else
 	MOVE = mv
 endif
 
-all: spellcheck docx pdf web
+all: docx pdf
 
 spellcheck:
 	python tools/spellcheck.py md
