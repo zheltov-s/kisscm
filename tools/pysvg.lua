@@ -16,9 +16,8 @@ local function diagram_options(cb)
 end
 
 local RSVG = "tools\\rsvg-convert.exe"
-local TMP  = "temp"
 local function svg_to_png(svg)
-    local base = TMP .. "\\pandoc_" .. pandoc.sha1(svg)
+    local base = "build\\pandoc_" .. pandoc.sha1(svg)
     local svg_path, png_path = base .. ".svg", base .. ".png"
 
     local f = io.open(svg_path, "wb"); f:write(svg); f:close()
